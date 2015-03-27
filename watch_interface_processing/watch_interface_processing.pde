@@ -15,7 +15,7 @@ PImage heartNone;
 
 long lastTempTime = 0;
 long timer;
-
+long lastPulsePrint = 0;
 long start = 0;
 
 void setup() {
@@ -25,7 +25,7 @@ void setup() {
   heartNone = loadImage("heartOutline.png");
 
   lastTempTime = millis();
-  
+  lastPulsePrint = millis();
 
   String portName = Serial.list()[5]; //change the 0 to a 1 or 2 etc. to match your port
   myPort = new Serial(this, portName, 9600);
@@ -50,7 +50,7 @@ void draw() {
   } 
 
   if (val != null) {  
-   // println(val);
+    println(val);
   } 
 
 
@@ -70,10 +70,11 @@ if(start < 3000) {
 
   else {
       if (val != null && val.contains("buttonPressed")) {
-
+if((millis() - lastPulsePrint) > 200) {
     buttonPressed();
     
-   
+      lastPulsePrint = millis();
+}
   }   
   
   }
@@ -134,17 +135,17 @@ void getHeartRate() {
     //println("Heart Rate " + heartRate);
   } 
 
-  textSize(120);
-  text(heartRate + "BPM", width/2, height/2);
+  textSize(100);
+  text(heartRate + " BPM", width/3, height/2);
   if (val != null && val.contains("beat")) {
 
     timer = millis();
   }
   if ( (millis() - timer) < 200) {
 
-    shape(heart, 120, 150, 80, 80);
+    shape(heart, 80, 150, 80, 80);
   } else {
-    image(heartNone, 120, 150, 100, 100);
+    image(heartNone, 80, 150, 100, 100);
   }
 }
 

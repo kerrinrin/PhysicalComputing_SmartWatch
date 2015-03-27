@@ -1,5 +1,3 @@
-
-const int tempPin =2;
 const int buttonPin = 3;
 int buttonState;
 int lastButtonState = LOW;
@@ -9,34 +7,22 @@ long debounceDelay = 100;
 
 
 
-void setup() {  
+
+void setupButton() {  
   Serial.begin(9600);
   pinMode(buttonPin, INPUT);
-
-  //heartbeat blink
-  pinMode(blinkPin,OUTPUT);  
-  // pin that will blink to your heartbeat!
-  interruptSetup();
+  lastPrintTime = millis();
 
   
 }
 
-void loop() {
-  
-  getBeats();
-  
-  Signal = analogRead(pulsePin);
-  Serial.print("BPMStart"); 
-  Serial.print(BPM);
-  Serial.print("BPMEnd"); 
-  
- 
-  
-      
- 
-  
+void startButton() {
   
 
+  
+
+ 
+ 
 // read the state of the switch
  int reading = digitalRead(buttonPin);
  
@@ -63,7 +49,10 @@ if((millis() - lastDebounceTime) > debounceDelay) {
        // only toogle the LED if the new switch state is high 
        if(buttonState == HIGH) {
         
+         
+         
          Serial.print("buttonPressed");
+         
        }
   
     }
@@ -73,25 +62,5 @@ if((millis() - lastDebounceTime) > debounceDelay) {
 
 //save the reading so next time it goes through the loop it will be the last switch state
 lastButtonState = reading;
- 
-    
-    
-  
-
-  float voltage, degreesF, degreesC;
-
-
-
-  voltage = analogRead(tempPin) * 0.004882814;
-  degreesC = (voltage - 0.5) * 100.0;
-  degreesF = degreesC * (9.0/5.0) + 42.0;
-
-  Serial.print("beginTemp");
-  Serial.print(degreesF);
-  Serial.println("endTemp");
-  
-  
 
 }
-
-
